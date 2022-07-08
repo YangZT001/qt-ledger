@@ -75,3 +75,15 @@ void COMMON::clearFile(QString fileName){
         return;
     }
 }
+void COMMON::separatePayAndIncome(QList<TX> qlist,
+                          QList<QPair<QString,double>>&pay,
+                          QList<QPair<QString,double>>&income){
+    for (TX tx : qlist){
+        if (!tx.payName.isEmpty()){
+            pay.push_back({tx.payName,tx.payCnt});
+        }
+        if (!tx.incomeName.isEmpty()){
+            income.push_back({tx.incomeName,tx.incomeCnt});
+        }
+    }
+}

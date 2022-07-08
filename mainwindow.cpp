@@ -83,13 +83,24 @@ void MainWindow::showTreeView(){
     model->setHorizontalHeaderLabels(QStringList() << "收支情况详情");
     QStringList FTitle;
     QStringList STitle;
-    QList<int> STitleLen;
+    QStringList TTitle;
+    QList<int> TTitleLen;
+    STitle<<"支出"<<"收入";
     for(auto each : QM.toStdMap()){
-        FTitle<<each.first.toString();
-        for(TX tx : each.second){
-            STitle<<tx.toQString();
+        FTitle<<each.first.toString(dateFormat);
+        QList<QPair<QString,double>> pay;
+        QList<QPair<QString,double>> income;
+        COMMON::separatePayAndIncome(each.second,pay,income);
+        for(QPair<QString,double> p :pay){
+            TTitle<<p.first+":"+QString::number(p.second,'.',2);
         }
-        STitleLen<<each.second.size();
+        TTitleLen<<pay.size();
+        for(QPair<QString,double> in :income){
+            TTitle<<in.first+":"+QString::number(in.second,'.',2);
+        }
+        TTitleLen<<income.size();
+
+
     }
     int start=0;
     for (int i1 = 0; i1 < FTitle.length(); i1++){
@@ -98,15 +109,23 @@ void MainWindow::showTreeView(){
         QStandardItem* item1 = new QStandardItem(subprimaryTitle);
         items1.append(item1);
         model->appendRow(items1);
-        for (int i2 = 0; i2 < STitleLen[i1]; i2++){
+        for (int i2 = 0; i2 < 2; i2++){
             QList<QStandardItem*> items2;
-            QStandardItem* item3 = new QStandardItem(STitle[start + i2]);
-            items2.append(item3);
+            QStandardItem* item2 = new QStandardItem(STitle[i2]);
+            items2.append(item2);
             item1->appendRow(items2);
+            for (int i3 = 0; i3 < TTitleLen[i1*2+i2]; i3++){
+                QList<QStandardItem*> items3;
+                QStandardItem* item3 = new QStandardItem(TTitle[start]);
+                items3.append(item3);
+                item2->appendRow(items3);
+                start++;
+            }
         }
-        start += STitleLen[i1];
     }
     ui->treeView->setModel(model);
+    ui->treeView->setItemsExpandable(true);
+    ui->treeView->expandAll();
 }
 
 MainWindow::~MainWindow()
