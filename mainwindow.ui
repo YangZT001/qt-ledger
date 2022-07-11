@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>587</width>
-    <height>600</height>
+    <height>590</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <rect>
       <x>10</x>
       <y>81</y>
-      <width>271</width>
+      <width>281</width>
       <height>171</height>
      </rect>
     </property>
@@ -31,7 +31,7 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>251</width>
+       <width>261</width>
        <height>136</height>
       </rect>
      </property>
@@ -101,7 +101,7 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>271</width>
+      <width>281</width>
       <height>61</height>
      </rect>
     </property>
@@ -113,7 +113,7 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>251</width>
+       <width>261</width>
        <height>31</height>
       </rect>
      </property>
@@ -122,8 +122,8 @@
    <widget class="QPushButton" name="clearBtn">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>410</y>
+      <x>210</x>
+      <y>520</y>
       <width>75</width>
       <height>24</height>
      </rect>
@@ -131,6 +131,143 @@
     <property name="text">
      <string>清空数据</string>
     </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>260</y>
+      <width>281</width>
+      <height>241</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>计算分析</string>
+    </property>
+    <widget class="QDateTimeEdit" name="startTimeEdit">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>101</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QDateTimeEdit" name="endTimeEdit">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>20</y>
+       <width>101</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="toNowCheckBox">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>20</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>至今</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="computeBtn">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>210</y>
+       <width>75</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>计算</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="payText">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>80</y>
+       <width>205</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="incomeText">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>110</y>
+       <width>205</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="dayText">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>50</y>
+       <width>205</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="dayLabel">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>48</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>总天数</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="payCountLabel">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>48</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>总支出</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="incomeCountLabel">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>110</y>
+       <width>48</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>总收入</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

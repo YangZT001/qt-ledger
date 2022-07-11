@@ -18,6 +18,14 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    const QString fileName = "./data.log";
+private slots:
+
+    void on_commitBtn_clicked();
+
+    void on_clearBtn_clicked();
+
+    void on_computeBtn_clicked();
 
 protected:
     void commitAndStorageTx();
@@ -27,7 +35,6 @@ protected:
     void testSet();
     QDate getQTime();
     TX getTx();
-    bool isDelete(QWidget *parent);
     void showTreeView();
 };
 #endif // MAINWINDOW_H

@@ -4,7 +4,7 @@
 #include<QMessageBox>
 #include<QStandardItemModel>
 
-const QString fileName = "./data.log";
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     setTimeStyle();
     setCurrentTime();
-    testSet();
+//    testSet();
 
     QFile file(fileName);
     if(file.exists()){
@@ -21,18 +21,10 @@ MainWindow::MainWindow(QWidget *parent)
         showTreeView();
     }
 
-    connect(ui->commitBtn,&QPushButton::clicked,[this,&f=fileName](){
-        commitAndStorageTx();
-        COMMON::saveFile(f);
-        showTreeView();
-    });
-    connect(ui->clearBtn,&QPushButton::clicked,[this,&f=fileName,&p=parent](){
-        if(isDelete(p)){
-            COMMON::clearFile(f);
-            QM.clear();
-        }
-        showTreeView();
-    });
+    connect(ui->commitBtn,SIGNAL(clicked()),this,SLOT(on_commitBtn_clicked()),Qt::UniqueConnection);
+    connect(ui->clearBtn,SIGNAL(clicked()),this,SLOT(on_clearBtn_clicked()),Qt::UniqueConnection);
+    connect(ui->computeBtn,SIGNAL(clicked()),this,SLOT(on_computeBtn_clicked()));
+
 
 }
 QDate MainWindow::getQTime(){
@@ -49,6 +41,8 @@ TX MainWindow::getTx(){
 void MainWindow::setCurrentTime(){
     QDate currentDate = QDate::currentDate();
     ui->TxDateEdit->setDate(currentDate);
+    ui->startTimeEdit->setDate(currentDate.addDays(-7));
+    ui->endTimeEdit->setDate(currentDate);
 }
 void MainWindow::setTxContent(TX tx){
     ui->payName->setText(tx.payName);
@@ -58,6 +52,8 @@ void MainWindow::setTxContent(TX tx){
 }
 void MainWindow::setTimeStyle(QString df){
     ui->TxDateEdit->setDisplayFormat(df);
+    ui->startTimeEdit->setDisplayFormat(df);
+    ui->endTimeEdit->setDisplayFormat(df);
 }
 void MainWindow::testSet(){
     TX tx = TX{"haha",1,"hehe",2};
@@ -72,10 +68,6 @@ void MainWindow::commitAndStorageTx(){
     }else{
         QM.insert(t,QList<TX>{tx});
     }
-}
-bool MainWindow::isDelete(QWidget *parent){
-    QMessageBox::StandardButton result = QMessageBox::question(parent,"Title","text");
-    return result==QMessageBox::Yes;
 }
 
 void MainWindow::showTreeView(){
@@ -128,8 +120,50 @@ void MainWindow::showTreeView(){
     ui->treeView->expandAll();
 }
 
+
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+
+void MainWindow::on_commitBtn_clicked()
+{
+    commitAndStorageTx();
+    COMMON::saveFile(fileName);
+    showTreeView();
+}
+
+
+void MainWindow::on_clearBtn_clicked()
+{
+    qDebug()<<"hello";
+    QMessageBox::StandardButton result = QMessageBox::information(this,  "警告",  "数据将永远消失", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+    if(result==QMessageBox::Yes){
+        COMMON::clearFile(fileName);
+        if(QM.isEmpty()){
+            return;
+        }
+        QM.clear();
+        showTreeView();
+    }
+}
+
+
+void MainWindow::on_computeBtn_clicked()
+{
+    QDate start = ui->startTimeEdit->date();
+    QDate end = ui->endTimeEdit->date();
+    int days;
+    double pay=0,income=0;
+    if (ui->toNowCheckBox->isChecked()){
+        end = QDate::currentDate();
+    }
+    days = start.daysTo(end);
+    COMMON::count(start,end,pay,income);
+    ui->payText->setText(QString::number(pay,'.',2));
+    ui->incomeText->setText(QString::number(income,'.',2));
+    ui->dayText->setText(QString::number(days));
+
 }
 

@@ -32,4 +32,5 @@ namespace COMMON{
     void separatePayAndIncome(QList<TX> qlist,
                               QList<QPair<QString,double>>&pay,
                               QList<QPair<QString,double>>&income);
+    void count(QDate start,QDate end,double &pay,double &income);
 }

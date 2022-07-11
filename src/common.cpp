@@ -87,3 +87,22 @@ void COMMON::separatePayAndIncome(QList<TX> qlist,
         }
     }
 }
+void COMMON::count(QDate start,QDate end,double &pay,double &income){
+    for (auto iter : QM.toStdMap()){
+        if(iter.first<start){
+            continue;
+        }
+        if (iter.first>end){
+            break;
+        }
+        QList<QPair<QString,double>>Ps;
+        QList<QPair<QString,double>>Is;
+        separatePayAndIncome(iter.second,Ps,Is);
+        for(QPair<QString,double> P:Ps){
+            pay+=P.second;
+        }
+        for(QPair<QString,double> I:Is){
+            income+=I.second;
+        }
+    }
+}
